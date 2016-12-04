@@ -60,6 +60,7 @@ curl http://localhost:8080/products
 curl http://localhost:8080/products/async
 ```
 - This service is using CompletableFuture java feature to turn the code non-blocking
+
 ### The services also can be called from the [Postman](https://www.getpostman.com/)
 Use the folder postman and import the collection to your postman app.
 This colletion provide call to both services sync and async and assertation test for the result.

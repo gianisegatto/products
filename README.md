@@ -41,7 +41,7 @@ Take all products listed on the page, goes to each product page and return a lis
 git clone https://github.com/gianisegatto/products.git
 ```
 - Open the terminal
-Go to the folder that the code was cloned and type
+- Go to the folder that the code was cloned and type
 ```
 mvn clean install
 ```

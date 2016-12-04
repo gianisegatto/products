@@ -1,0 +1,89 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Sainsbury's Products",
+		"_postman_id": "aff35980-b06e-0c5a-ddd3-f3e71cad644b",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Asyncronous request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"var response = JSON.parse(responseBody);",
+							"",
+							"tests[\"Response has products\"] = response.products !== null;",
+							"tests[\"Response has total\"] = response.total !== null;",
+							"",
+							"var products = response.products;",
+							"for (var i = 0; i < products.length; i++) {",
+							"    var product = products[i];",
+							"    tests[\"All products has title\"] = product.title !== null;",
+							"    tests[\"All products has size\"] = product.size !== null;",
+							"    tests[\"All products has description\"] = product.description !== null;",
+							"    tests[\"All products has price\"] = product.price !== null;",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:8080/products/async",
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"description": "This request can be used to test the calls against the asyncronous Sainsbury's products service."
+			},
+			"response": []
+		},
+		{
+			"name": "Syncronous request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"var response = JSON.parse(responseBody);",
+							"",
+							"tests[\"Response has products\"] = response.products !== null;",
+							"tests[\"Response has total\"] = response.total !== null;",
+							"",
+							"var products = response.products;",
+							"for (var i = 0; i < products.length; i++) {",
+							"    var product = products[i];",
+							"    tests[\"All products has title\"] = product.title !== null;",
+							"    tests[\"All products has size\"] = product.size !== null;",
+							"    tests[\"All products has description\"] = product.description !== null;",
+							"    tests[\"All products has price\"] = product.price !== null;",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:8080/products",
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"description": "This request can be used to test the calls against the asyncronous Sainsbury's products service."
+			},
+			"response": []
+		}
+	]
+}

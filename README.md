@@ -48,7 +48,7 @@ mvn clean install
 
 ### Run
 - Open the terminal
-Go to the folder that the code was cloned and type
+- Go to the folder that the code was cloned and type
 ```
 mvn spring-boot:run
 ```

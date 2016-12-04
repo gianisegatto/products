@@ -23,7 +23,8 @@ Take all products listed on the page, goes to each product page and return a lis
 ```
 ### Stack
 - [java 8](http://www.oracle.com/technetwork/java/javase/overview/java8-2100321.html) - Programming language
-- [spring-boot 1.4.2](https://github.com/spring-projects/spring-boot) - Provide application services and embeded webcontainer server
+- [spring-boot 1.4.2](https://github.com/spring-projects/spring-boot) - Provide application services
+- [tomcat](http://tomcat.apache.org/) - Web container server, embeded in spring-boot
 - [jsoup 1.10.1](https://jsoup.org/) - Java library for html parser
 - [junit](http://junit.org/) - Unit tests
 - [mockito](http://site.mockito.org/) - Mocking objects for unit tests

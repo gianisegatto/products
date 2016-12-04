@@ -20,6 +20,13 @@ public class ProductListPageServiceTest {
     }
 
     @Test
+    public void should_EmptyList_InvalidUrl() {
+        ReflectionTestUtils.setField(productListPageService, "productsPageUrl", "http://dlkdlkj");
+        List<Element> elements = productListPageService.list();
+        assertThat(elements.size(), is(0));
+    }
+
+    @Test
     public void should_ReturnProductLines() {
         ReflectionTestUtils.setField(productListPageService, "productsPageUrl", "http://hiring-tests.s3-website-eu-west-1.amazonaws.com/2015_Developer_Scrape/5_products.html");
         List<Element> productLines = productListPageService.list();

@@ -12,6 +12,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Optional;
 
 import static org.hamcrest.core.Is.is;
@@ -43,10 +44,30 @@ public class ProductServiceTest {
 
     @Test
     public void should_ReturnProducts() throws IOException {
+
+        when(productListPageService.list()).thenReturn(elements);
+        when(elements.stream()).thenReturn(Arrays.asList(element, element).stream());
+        when(element.attr("abs:href")).thenReturn("http://localhost:9080");
+        when(productDetailPageService.process("http://localhost:9080")).thenReturn(product);
+        when(product.getUnitPrice()).thenReturn(10f);
+
+        Optional<Results> results = productService.listProducts();
+
+        verify(productListPageService, times(1)).list();
+        verify(element, times(2)).attr("abs:href");
+        verify(productDetailPageService, times(2)).process("http://localhost:9080");
+
+        assertNotNull(results.get());
+        assertThat(results.get().getProducts().size(), is(2));
+        assertThat(results.get().getTotal(), is(20.0));
+    }
+
+    @Test
+    public void should_NotReturnProducts() throws IOException {
         when(productListPageService.list()).thenReturn(elements);
         when(elements.stream()).thenReturn(Arrays.asList(element).stream());
         when(element.attr("abs:href")).thenReturn("http://localhost:9080");
-        when(productDetailPageService.process("http://localhost:9080")).thenReturn(product);
+        when(productDetailPageService.process("http://notexisturl")).thenReturn(null);
 
         Optional<Results> results = productService.listProducts();
 
@@ -55,7 +76,22 @@ public class ProductServiceTest {
         verify(productDetailPageService, times(1)).process("http://localhost:9080");
 
         assertNotNull(results.get());
-        assertThat(results.get().getProducts().size(), is(1));
+        assertThat(results.get().getProducts().size(), is(0));
+        assertThat(results.get().getTotal(), is(0.0));
+    }
+
+    @Test
+    public void should_NotReturnProducts_ProductListEmpty() throws IOException {
+        when(productListPageService.list()).thenReturn(Collections.emptyList());
+
+        Optional<Results> results = productService.listProducts();
+
+        verify(productListPageService, times(1)).list();
+        verify(element, times(0)).attr("abs:href");
+        verify(productDetailPageService, times(0)).process("http://localhost:9080");
+
+        assertNotNull(results.get());
+        assertThat(results.get().getProducts().size(), is(0));
         assertThat(results.get().getTotal(), is(0.0));
     }
 }

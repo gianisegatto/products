@@ -1,5 +1,5 @@
 # Product List
-This application goes against Sainsbury's products page.
+This application goes to Sainsbury's products page.
 Take all products listed on the page, goes to each product page and return a list of products with the following content:
 ```json
 {

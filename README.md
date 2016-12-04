@@ -3,7 +3,7 @@
 This application goes against Sainsbury's products page.
 Take all products listed on the page, goes to each product page and return a list of products with the following content:
 
-''json
+```json
 {
   "products": [
     {
@@ -22,6 +22,7 @@ Take all products listed on the page, goes to each product page and return a lis
   ],
   "total": 15.1
 }
+```
 ### Setup
 
 1. Install [Java 8](http://www.oracle.com/technetwork/java/javase/overview/java8-2100321.html), if you don't have it yet.
@@ -41,11 +42,24 @@ Go to the folder that the code was cloned and type
 mvn clean install
 ```
 
-### run
+### Run
 
 Open the terminal
 Go to the folder that the code was cloned and type
 
 ```
 mvn spring-boot:run
+```
+### Call Sync service
+Open the terminal and type
+
+```
+curl http://localhost:8080/products
+```
+
+### Call Async service
+Open the terminal and type
+
+```
+curl http://localhost:8080/products/async
 ```

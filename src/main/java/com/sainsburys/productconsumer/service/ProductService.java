@@ -58,6 +58,7 @@ public class ProductService {
         return productLines.stream()
                         .map(line -> line.attr(LINK_ATTRIBUTE))
                         .map(productDetailPageService::process)
+                        .filter(product -> product != null)
                         .collect(Collectors.toList());
     }
 }

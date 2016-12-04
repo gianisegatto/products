@@ -12,6 +12,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * This class provides a list of products and the sum of the all prices executing in a sequence way.
+ */
 @Service
 public class ProductService {
 
@@ -29,6 +32,11 @@ public class ProductService {
     @Autowired
     private ProductDetailPageService productDetailPageService;
 
+    /**
+     * Provides a list of products based on the Sainsbury's products page executing in sequence
+     * each link from the page.
+     * @return List of products from the Sainsbury' products page
+     */
     public Optional<Results> listProducts() {
 
         Results results = null;
@@ -40,7 +48,13 @@ public class ProductService {
         return Optional.ofNullable(results);
     }
 
-    private List<Product> processProducts(List<Element> productLines) {
+    /**
+     * Call the product detail service sending the link of the product detail page executing on the
+     * sequence of the productLines list.
+     * @param productLines List of the products from the Sainsbury' products page
+     * @return List of products based on the the products list
+     */
+    private List<Product> processProducts(final List<Element> productLines) {
         return productLines.stream()
                         .map(line -> line.attr(LINK_ATTRIBUTE))
                         .map(productDetailPageService::process)

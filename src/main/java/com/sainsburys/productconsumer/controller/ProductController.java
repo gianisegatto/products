@@ -16,6 +16,10 @@ import org.springframework.web.context.request.async.DeferredResult;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Controller to provider services to list the products
+ * This controller prodives two services and both returns the same results.
+ */
 @RestController
 @RequestMapping("/products")
 public class ProductController {
@@ -26,6 +30,11 @@ public class ProductController {
     @Autowired
     private ProductServiceAsync productServiceAsync;
 
+    /**
+     * Call the Sainsbury's products test page and return a list of the products inside the page
+     * This service is a blocking style and execute everything in a sequence.
+     * @return Results object with list of products and the total sum price of all products
+     */
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Product>> listProducts() {
 
@@ -35,6 +44,11 @@ public class ProductController {
                 .orElse(new ResponseEntity(HttpStatus.NOT_FOUND));
     }
 
+    /**
+     * Call the Sainsbury's products test page and return a list of the products inside the page
+     * This service is a non-blocking style and execute the process in parallel.
+     * @return Results object with list of products and the total sum price of all products
+     */
     @RequestMapping(value = "/async",
             method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public DeferredResult<ResponseEntity<Results>> listProductsAsync() {

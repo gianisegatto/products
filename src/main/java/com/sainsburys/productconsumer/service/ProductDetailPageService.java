@@ -12,6 +12,10 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.math.BigInteger;
 
+/**
+ * This class provides a way to get the details of the product in the Sainsbury's Product Details page
+ * and return the product information
+ */
 @Service
 public class ProductDetailPageService {
 
@@ -29,6 +33,11 @@ public class ProductDetailPageService {
     @Value("${jsoup.tiemout}")
     private int jSoupTimeout;
 
+    /**
+     * Return the product information based on the Product Details page link
+     * @param link Product Detail page link to be read
+     * @return Product details
+     */
     public Product process(final String link) {
 
         Product product = null;

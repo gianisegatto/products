@@ -4,6 +4,10 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
+/**
+ * This class implements the pattern builder to create an Results object and calculate the
+ * sum of all products inside the products list.
+ */
 public class ResultsBuilder {
 
     private static final int HUNDRED_ROUND = 100;

@@ -11,6 +11,10 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * This class provides a way to read all products link from the Sainsbury' product list page.
+ * The products list page URL is configured in the productsPageUrl attribute in the  application.properties file.
+ */
 @Service
 public class ProductListPageService {
 
@@ -23,6 +27,10 @@ public class ProductListPageService {
     @Value("${jsoup.tiemout}")
     private int jSoupTimeout;
 
+    /**
+     * Provides a list of product link base on the Sainsbury's product list page.
+     * @return List of links
+     */
     public List<Element> list() {
 
         Elements productLines = new Elements();

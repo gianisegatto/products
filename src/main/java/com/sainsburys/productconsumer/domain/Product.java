@@ -2,8 +2,9 @@ package com.sainsburys.productconsumer.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.function.Supplier;
-
+/**
+ * This class represents the product that will be returned to the client
+ */
 public class Product {
 
     private String title;
@@ -16,7 +17,7 @@ public class Product {
         return title;
     }
 
-    public void setTitle(String title) {
+    public void setTitle(final String title) {
         this.title = title;
     }
 
@@ -24,7 +25,7 @@ public class Product {
         return size;
     }
 
-    public void setSize(String size) {
+    public void setSize(final String size) {
         this.size = size;
     }
 
@@ -32,7 +33,7 @@ public class Product {
         return unitPrice;
     }
 
-    public void setUnitPrice(Float unitPrice) {
+    public void setUnitPrice(final Float unitPrice) {
         this.unitPrice = unitPrice;
     }
 
@@ -40,7 +41,7 @@ public class Product {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(final String description) {
         this.description = description;
     }
 }

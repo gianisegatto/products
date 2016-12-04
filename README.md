@@ -79,4 +79,4 @@ PROJECT-FOLDER/postman/SainsburysProductsColletion.json
 - Go to the Sainsbury's Products colletion
 - Click on the > button
 - Click on the Run button
-- After colletion runner window open click on Start Run button
+- After collection runner window open click on Start Run button

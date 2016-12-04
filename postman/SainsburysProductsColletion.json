@@ -2,7 +2,7 @@
 	"variables": [],
 	"info": {
 		"name": "Sainsbury's Products",
-		"_postman_id": "aff35980-b06e-0c5a-ddd3-f3e71cad644b",
+		"_postman_id": "a199c969-bf98-bf38-396f-ce69bc04d6ea",
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -42,7 +42,7 @@
 					"mode": "formdata",
 					"formdata": []
 				},
-				"description": "This request can be used to test the calls against the asyncronous Sainsbury's products service."
+				"description": "This request can be used to test the calls to the asyncronous Sainsbury's products service."
 			},
 			"response": []
 		},
@@ -81,7 +81,7 @@
 					"mode": "formdata",
 					"formdata": []
 				},
-				"description": "This request can be used to test the calls against the asyncronous Sainsbury's products service."
+				"description": "This request can be used to test the calls to the syncronous Sainsbury's products service."
 			},
 			"response": []
 		}

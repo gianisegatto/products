@@ -36,8 +36,9 @@ Take all products listed on the page, goes to each product page and return a lis
 ### Build
 **Building in a local environment:**
 - Clone the code from the repository:
+- Open the terminal go to some folder and type
 ```
-https://github.com/gianisegatto/products.git
+git clone https://github.com/gianisegatto/products.git
 ```
 - Open the terminal
 Go to the folder that the code was cloned and type
@@ -70,7 +71,7 @@ Use the folder postman and import the collection to your postman app.
 This colletion provide call to both services sync and async and assertation test for the result.
 - Execute the step Run
 - Open the postman
-- Click on the import button
+- Click on the import butto
 - Select the file 
 ```
 PROJECT-FOLDER/postman/SainsburysProductsColletion.json

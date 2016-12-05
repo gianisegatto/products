@@ -13,6 +13,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import static org.hamcrest.core.Is.is;
@@ -31,7 +32,7 @@ public class ProductServiceTest {
     private Element element;
 
     @Mock
-    private Elements elements;
+    private List<Element> elements;
 
     @Mock
     private ProductListPageService productListPageService;
@@ -45,7 +46,7 @@ public class ProductServiceTest {
     @Test
     public void should_ReturnProducts() throws IOException {
 
-        when(productListPageService.list()).thenReturn(elements);
+        when(productListPageService.process()).thenReturn(elements);
         when(elements.stream()).thenReturn(Arrays.asList(element, element).stream());
         when(element.attr("abs:href")).thenReturn("http://localhost:9080");
         when(productDetailPageService.process("http://localhost:9080")).thenReturn(product);
@@ -53,7 +54,7 @@ public class ProductServiceTest {
 
         Optional<Results> results = productService.listProducts();
 
-        verify(productListPageService, times(1)).list();
+        verify(productListPageService, times(1)).process();
         verify(element, times(2)).attr("abs:href");
         verify(productDetailPageService, times(2)).process("http://localhost:9080");
 
@@ -64,14 +65,14 @@ public class ProductServiceTest {
 
     @Test
     public void should_NotReturnProducts() throws IOException {
-        when(productListPageService.list()).thenReturn(elements);
+        when(productListPageService.process()).thenReturn(elements);
         when(elements.stream()).thenReturn(Arrays.asList(element).stream());
         when(element.attr("abs:href")).thenReturn("http://localhost:9080");
         when(productDetailPageService.process("http://notexisturl")).thenReturn(null);
 
         Optional<Results> results = productService.listProducts();
 
-        verify(productListPageService, times(1)).list();
+        verify(productListPageService, times(1)).process();
         verify(element, times(1)).attr("abs:href");
         verify(productDetailPageService, times(1)).process("http://localhost:9080");
 
@@ -82,11 +83,11 @@ public class ProductServiceTest {
 
     @Test
     public void should_NotReturnProducts_ProductListEmpty() throws IOException {
-        when(productListPageService.list()).thenReturn(Collections.emptyList());
+        when(productListPageService.process()).thenReturn(Collections.emptyList());
 
         Optional<Results> results = productService.listProducts();
 
-        verify(productListPageService, times(1)).list();
+        verify(productListPageService, times(1)).process();
         verify(element, times(0)).attr("abs:href");
         verify(productDetailPageService, times(0)).process("http://localhost:9080");
 

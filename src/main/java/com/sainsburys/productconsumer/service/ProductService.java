@@ -41,7 +41,7 @@ public class ProductService {
 
         Results results = null;
 
-        List<Product> products = processProducts(productListPageService.list());
+        List<Product> products = processProducts(productListPageService.process());
 
         results = new ResultsBuilder().products(products).build();
 

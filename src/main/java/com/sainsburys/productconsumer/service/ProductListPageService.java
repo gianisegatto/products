@@ -31,7 +31,7 @@ public class ProductListPageService {
      * Provides a list of product link base on the Sainsbury's product list page.
      * @return List of links
      */
-    public List<Element> list() {
+    public List<Element> process() {
 
         Elements productLines = new Elements();
 

@@ -16,20 +16,20 @@ public class ProductListPageServiceTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void should_ThrowIllegalArgumentException_UrlNull() {
-        productListPageService.list();
+        productListPageService.process();
     }
 
     @Test
     public void should_EmptyList_InvalidUrl() {
         ReflectionTestUtils.setField(productListPageService, "productsPageUrl", "http://dlkdlkj");
-        List<Element> elements = productListPageService.list();
+        List<Element> elements = productListPageService.process();
         assertThat(elements.size(), is(0));
     }
 
     @Test
     public void should_ReturnProductLines() {
         ReflectionTestUtils.setField(productListPageService, "productsPageUrl", "http://hiring-tests.s3-website-eu-west-1.amazonaws.com/2015_Developer_Scrape/5_products.html");
-        List<Element> productLines = productListPageService.list();
+        List<Element> productLines = productListPageService.process();
         assertNotNull(productLines);
         assertThat(productLines.size(), is(7));
     }

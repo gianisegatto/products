@@ -1,69 +1,93 @@
 package com.sainsburys.productconsumer.service;
 
-import com.sainsburys.productconsumer.Application;
 import com.sainsburys.productconsumer.configuration.ProductConfiguration;
-import com.sainsburys.productconsumer.domain.Results;
+import com.sainsburys.productconsumer.domain.Product;
+import org.jsoup.nodes.Element;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
-import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.test.util.ReflectionTestUtils;
-import org.springframework.web.context.request.async.DeferredResult;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.*;
 
-@ContextConfiguration(classes = {
-        Application.class})
-@TestPropertySource("classpath:application.properties")
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(MockitoJUnitRunner.class)
 public class ProductServiceAsyncTest {
 
-    @Autowired
+    private ExecutorService executor;
+
+    @Mock
+    private Element element;
+
+    @Mock
+    private List<Element> elements;
+
+    @Mock
+    private Product product;
+
+    @Mock
+    private ProductListPageService productListPageService;
+
+    @Mock
+    private ProductDetailPageService productDetailPageService;
+
+    @InjectMocks
     private ProductServiceAsync productServiceAsync;
+
+    @Before
+    public void setUp() {
+
+        ProductConfiguration productConfiguration = new ProductConfiguration();
+        ReflectionTestUtils.setField(productConfiguration, "corePoolSize", 20);
+        ReflectionTestUtils.setField(productConfiguration, "maximumPoolSize", 40);
+        ReflectionTestUtils.setField(productConfiguration, "keepAliveTime", 1000);
+
+        executor = productConfiguration.executorService();
+
+        ReflectionTestUtils.setField(productServiceAsync, "executor", executor);
+    }
 
     @Test
     public void should_ThrowIllegalArgumentException() {
-        ReflectionTestUtils.setField(productServiceAsync, "productsPageUrl", null);
-        DeferredResult<ResponseEntity<Results>> deferredResult = productServiceAsync.listProducts();
-        deferredResult.onCompletion(() -> {
-            assertNotNull(deferredResult.getResult());
-            ResponseEntity<Results> responseEntity = (ResponseEntity<Results>) deferredResult.getResult();
-            assertNull(responseEntity.getBody());
-        });
+
+        when(productListPageService.process()).thenThrow(new IllegalArgumentException());
+
+        productServiceAsync.listProducts();
+
+        verify(productListPageService, times(1)).process();
+        verify(productDetailPageService, times(0)).process(anyString());
     }
 
     @Test
     public void should_ReturnEmptyResult_InvalidURL() {
-        ReflectionTestUtils.setField(productServiceAsync, "productsPageUrl", "http://dkjfdkl");
-        DeferredResult<ResponseEntity<Results>> deferredResult = productServiceAsync.listProducts();
 
-        deferredResult.onCompletion(() -> {
-            assertNotNull(deferredResult.getResult());
-            ResponseEntity<Results> responseEntity = (ResponseEntity<Results>) deferredResult.getResult();
-            assertNull(responseEntity.getBody());
-        });
+        when(productListPageService.process()).thenReturn(Collections.emptyList());
+
+        productServiceAsync.listProducts();
+
+        verify(productListPageService, times(1)).process();
+        verify(productDetailPageService, times(0)).process(anyString());
     }
 
     @Test
     public void should_ReturnProducts() throws IOException {
-        DeferredResult<ResponseEntity<Results>> deferredResult = productServiceAsync.listProducts();
-        deferredResult.onCompletion(() -> {
-            assertNotNull(deferredResult.getResult());
-            ResponseEntity<Results> responseEntity = (ResponseEntity<Results>) deferredResult.getResult();
-            assertNotNull(responseEntity.getBody());
-            assertThat(responseEntity.getBody().getProducts().size(), is(7));
-            assertThat(responseEntity.getBody().getTotal(), is(15.1));
-        });
+
+        when(productListPageService.process()).thenReturn(Arrays.asList(element, element));
+        when(elements.stream()).thenReturn(Arrays.asList(element, element).stream());
+        when(productDetailPageService.process(anyString())).thenReturn(product);
+
+        productServiceAsync.listProducts();
+
+        verify(productListPageService, times(1)).process();
+        verify(productDetailPageService, times(2)).process(anyString());
     }
 }

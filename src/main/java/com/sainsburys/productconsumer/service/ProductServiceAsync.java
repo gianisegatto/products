@@ -74,7 +74,7 @@ public class ProductServiceAsync {
      */
     private CompletableFuture<Results> executeAsync() {
 
-        CompletableFuture<List<Element>> productsList = CompletableFuture.supplyAsync(() -> productListPageService.list());
+        CompletableFuture<List<Element>> productsList = CompletableFuture.supplyAsync(() -> productListPageService.process());
 
         CompletableFuture<Results> completableFuture = productsList
                 .thenApply(this::processLinks)

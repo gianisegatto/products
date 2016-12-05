@@ -5,8 +5,6 @@ import com.sainsburys.productconsumer.domain.Product;
 import com.sainsburys.productconsumer.domain.Results;
 import com.sainsburys.productconsumer.domain.ResultsBuilder;
 import org.jsoup.nodes.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -54,7 +52,7 @@ public class ProductServiceAsync {
 
         DeferredResult<ResponseEntity<Results>> deferredResult = new DeferredResult<>();
 
-        CompletableFuture.supplyAsync(() -> this.executeAsync(), executor)
+        CompletableFuture.supplyAsync(() -> this.processAsync(), executor)
                 .whenCompleteAsync((response, e) -> {
                     response.exceptionally(ex -> {
                         deferredResult.setErrorResult(ex.getCause());
@@ -72,7 +70,7 @@ public class ProductServiceAsync {
      * Executes all calls to the Sainbury's pages async.
      * @return Results of products.
      */
-    private CompletableFuture<Results> executeAsync() {
+    private CompletableFuture<Results> processAsync() {
 
         CompletableFuture<List<Element>> productsList = CompletableFuture.supplyAsync(() -> productListPageService.process());
 

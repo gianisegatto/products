@@ -1,6 +1,6 @@
 package com.sainsburys.productconsumer.service;
 
-import com.sainsburys.productconsumer.configuration.ProductConfiguration;
+import com.sainsburys.productconsumer.configuration.ExecutorServiceConfiguration;
 import com.sainsburys.productconsumer.domain.Product;
 import org.jsoup.nodes.Element;
 import org.junit.Before;
@@ -13,7 +13,6 @@ import org.springframework.test.util.ReflectionTestUtils;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 
@@ -46,12 +45,12 @@ public class ProductServiceAsyncTest {
     @Before
     public void setUp() {
 
-        ProductConfiguration productConfiguration = new ProductConfiguration();
-        ReflectionTestUtils.setField(productConfiguration, "corePoolSize", 20);
-        ReflectionTestUtils.setField(productConfiguration, "maximumPoolSize", 40);
-        ReflectionTestUtils.setField(productConfiguration, "keepAliveTime", 1000);
+        ExecutorServiceConfiguration executorServiceConfiguration = new ExecutorServiceConfiguration();
+        ReflectionTestUtils.setField(executorServiceConfiguration, "corePoolSize", 20);
+        ReflectionTestUtils.setField(executorServiceConfiguration, "maximumPoolSize", 40);
+        ReflectionTestUtils.setField(executorServiceConfiguration, "keepAliveTime", 1000);
 
-        executor = productConfiguration.executorService();
+        executor = executorServiceConfiguration.executorService();
 
         ReflectionTestUtils.setField(productServiceAsync, "executor", executor);
     }

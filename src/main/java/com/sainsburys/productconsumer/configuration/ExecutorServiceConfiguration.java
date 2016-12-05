@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
  * This class is used to create the ExecutorService bean to be used on the @ProductServiceAsync
  */
 @Configuration
-public class ProductConfiguration {
+public class ExecutorServiceConfiguration {
 
     @Value("${executor.service.corePoolSize}")
     private int corePoolSize;

@@ -27,10 +27,10 @@ public class ProductService {
     private int jSoupTimeout;
 
     @Autowired
-    private ProductListPageService productListPageService;
+    private ProductListService productListService;
 
     @Autowired
-    private ProductDetailPageService productDetailPageService;
+    private ProductDetailsService productDetailsService;
 
     /**
      * Provides a list of products based on the Sainsbury's products page executing in sequence
@@ -41,7 +41,7 @@ public class ProductService {
 
         Results results = null;
 
-        List<Product> products = processProducts(productListPageService.process());
+        List<Product> products = processProducts(productListService.process());
 
         results = new ResultsBuilder().products(products).build();
 
@@ -57,7 +57,7 @@ public class ProductService {
     private List<Product> processProducts(final List<Element> productLines) {
         return productLines.stream()
                         .map(line -> line.attr(LINK_ATTRIBUTE))
-                        .map(productDetailPageService::process)
+                        .map(productDetailsService::process)
                         .filter(product -> product != null)
                         .collect(Collectors.toList());
     }

@@ -34,10 +34,10 @@ public class ProductServiceAsyncTest {
     private Product product;
 
     @Mock
-    private ProductListPageService productListPageService;
+    private ProductListService productListService;
 
     @Mock
-    private ProductDetailPageService productDetailPageService;
+    private ProductDetailsService productDetailsService;
 
     @InjectMocks
     private ProductServiceAsync productServiceAsync;
@@ -58,24 +58,24 @@ public class ProductServiceAsyncTest {
     @Test
     public void should_ThrowIllegalArgumentException() {
 
-        when(productListPageService.process()).thenThrow(new IllegalArgumentException());
+        when(productListService.process()).thenThrow(new IllegalArgumentException());
 
         productServiceAsync.listProducts();
 
-        verify(productListPageService, times(0)).process();
-        verify(productDetailPageService, times(0)).process(anyString());
+        verify(productListService, times(0)).process();
+        verify(productDetailsService, times(0)).process(anyString());
     }
 
     @Test
     public void should_ReturnProducts() throws IOException {
 
-        when(productListPageService.process()).thenReturn(Arrays.asList(element, element));
+        when(productListService.process()).thenReturn(Arrays.asList(element, element));
         when(elements.stream()).thenReturn(Arrays.asList(element, element).stream());
-        when(productDetailPageService.process(anyString())).thenReturn(product);
+        when(productDetailsService.process(anyString())).thenReturn(product);
 
         productServiceAsync.listProducts();
 
-        verify(productListPageService, times(1)).process();
-        verify(productDetailPageService, times(2)).process(anyString());
+        verify(productListService, times(1)).process();
+        verify(productDetailsService, times(2)).process(anyString());
     }
 }

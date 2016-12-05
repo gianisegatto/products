@@ -17,9 +17,9 @@ import java.math.BigInteger;
  * and return the product information
  */
 @Service
-public class ProductDetailPageService {
+public class ProductDetailsService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ProductDetailPageService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProductDetailsService.class);
 
     private static final int KB_SIZE = 1024;
     private static final String KB = "kb";

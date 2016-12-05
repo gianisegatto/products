@@ -16,9 +16,9 @@ import java.util.List;
  * The products list page URL is configured in the productsPageUrl attribute in the  application.properties file.
  */
 @Service
-public class ProductListPageService {
+public class ProductListService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ProductListPageService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProductListService.class);
     private static final String PRODUCTS_LINK_ELEMENT = ".productLister a[href]";
 
     @Value("${products.page.url}")

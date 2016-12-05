@@ -3,7 +3,6 @@ package com.sainsburys.productconsumer.service;
 import com.sainsburys.productconsumer.domain.Product;
 import com.sainsburys.productconsumer.domain.Results;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -35,10 +34,10 @@ public class ProductServiceTest {
     private List<Element> elements;
 
     @Mock
-    private ProductListPageService productListPageService;
+    private ProductListService productListService;
 
     @Mock
-    private ProductDetailPageService productDetailPageService;
+    private ProductDetailsService productDetailsService;
 
     @InjectMocks
     private ProductService productService;
@@ -46,17 +45,17 @@ public class ProductServiceTest {
     @Test
     public void should_ReturnProducts() throws IOException {
 
-        when(productListPageService.process()).thenReturn(elements);
+        when(productListService.process()).thenReturn(elements);
         when(elements.stream()).thenReturn(Arrays.asList(element, element).stream());
         when(element.attr("abs:href")).thenReturn("http://localhost:9080");
-        when(productDetailPageService.process("http://localhost:9080")).thenReturn(product);
+        when(productDetailsService.process("http://localhost:9080")).thenReturn(product);
         when(product.getUnitPrice()).thenReturn(10f);
 
         Optional<Results> results = productService.listProducts();
 
-        verify(productListPageService, times(1)).process();
+        verify(productListService, times(1)).process();
         verify(element, times(2)).attr("abs:href");
-        verify(productDetailPageService, times(2)).process("http://localhost:9080");
+        verify(productDetailsService, times(2)).process("http://localhost:9080");
 
         assertNotNull(results.get());
         assertThat(results.get().getProducts().size(), is(2));
@@ -65,16 +64,16 @@ public class ProductServiceTest {
 
     @Test
     public void should_NotReturnProducts() throws IOException {
-        when(productListPageService.process()).thenReturn(elements);
+        when(productListService.process()).thenReturn(elements);
         when(elements.stream()).thenReturn(Arrays.asList(element).stream());
         when(element.attr("abs:href")).thenReturn("http://localhost:9080");
-        when(productDetailPageService.process("http://notexisturl")).thenReturn(null);
+        when(productDetailsService.process("http://notexisturl")).thenReturn(null);
 
         Optional<Results> results = productService.listProducts();
 
-        verify(productListPageService, times(1)).process();
+        verify(productListService, times(1)).process();
         verify(element, times(1)).attr("abs:href");
-        verify(productDetailPageService, times(1)).process("http://localhost:9080");
+        verify(productDetailsService, times(1)).process("http://localhost:9080");
 
         assertNotNull(results.get());
         assertThat(results.get().getProducts().size(), is(0));
@@ -83,13 +82,13 @@ public class ProductServiceTest {
 
     @Test
     public void should_NotReturnProducts_ProductListEmpty() throws IOException {
-        when(productListPageService.process()).thenReturn(Collections.emptyList());
+        when(productListService.process()).thenReturn(Collections.emptyList());
 
         Optional<Results> results = productService.listProducts();
 
-        verify(productListPageService, times(1)).process();
+        verify(productListService, times(1)).process();
         verify(element, times(0)).attr("abs:href");
-        verify(productDetailPageService, times(0)).process("http://localhost:9080");
+        verify(productDetailsService, times(0)).process("http://localhost:9080");
 
         assertNotNull(results.get());
         assertThat(results.get().getProducts().size(), is(0));

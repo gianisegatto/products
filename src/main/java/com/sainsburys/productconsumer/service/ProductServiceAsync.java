@@ -38,10 +38,10 @@ public class ProductServiceAsync {
     private ExecutorService executor;
 
     @Autowired
-    private ProductListPageService productListPageService;
+    private ProductListService productListService;
 
     @Autowired
-    private ProductDetailPageService productDetailPageService;
+    private ProductDetailsService productDetailsService;
 
     /**
      * Provides a list of products based on the Sainsbury's products page executing in parallel
@@ -72,7 +72,7 @@ public class ProductServiceAsync {
      */
     private CompletableFuture<Results> processAsync() {
 
-        CompletableFuture<List<Element>> productsList = CompletableFuture.supplyAsync(() -> productListPageService.process());
+        CompletableFuture<List<Element>> productsList = CompletableFuture.supplyAsync(() -> productListService.process());
 
         CompletableFuture<Results> completableFuture = productsList
                 .thenApply(this::processLinks)
@@ -91,7 +91,7 @@ public class ProductServiceAsync {
     private CompletableFuture<Product>[] processLinks(final List<Element> productLines) {
         return productLines.stream()
                 .map(element -> element.attr(LINK_ATTRIBUTE))
-                .map(link -> supplyAsync(() -> productDetailPageService.process(link), executor))
+                .map(link -> supplyAsync(() -> productDetailsService.process(link), executor))
                 .toArray(CompletableFuture[]::new);
     }
 

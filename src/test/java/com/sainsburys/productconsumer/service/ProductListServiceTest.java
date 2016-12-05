@@ -10,26 +10,26 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
-public class ProductListPageServiceTest {
+public class ProductListServiceTest {
 
-    private ProductListPageService productListPageService = new ProductListPageService();
+    private ProductListService productListService = new ProductListService();
 
     @Test(expected = IllegalArgumentException.class)
     public void should_ThrowIllegalArgumentException_UrlNull() {
-        productListPageService.process();
+        productListService.process();
     }
 
     @Test
     public void should_EmptyList_InvalidUrl() {
-        ReflectionTestUtils.setField(productListPageService, "productsPageUrl", "http://dlkdlkj");
-        List<Element> elements = productListPageService.process();
+        ReflectionTestUtils.setField(productListService, "productsPageUrl", "http://dlkdlkj");
+        List<Element> elements = productListService.process();
         assertThat(elements.size(), is(0));
     }
 
     @Test
     public void should_ReturnProductLines() {
-        ReflectionTestUtils.setField(productListPageService, "productsPageUrl", "http://hiring-tests.s3-website-eu-west-1.amazonaws.com/2015_Developer_Scrape/5_products.html");
-        List<Element> productLines = productListPageService.process();
+        ReflectionTestUtils.setField(productListService, "productsPageUrl", "http://hiring-tests.s3-website-eu-west-1.amazonaws.com/2015_Developer_Scrape/5_products.html");
+        List<Element> productLines = productListService.process();
         assertNotNull(productLines);
         assertThat(productLines.size(), is(7));
     }

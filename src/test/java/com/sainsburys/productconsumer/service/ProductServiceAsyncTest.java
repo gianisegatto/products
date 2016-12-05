@@ -63,18 +63,7 @@ public class ProductServiceAsyncTest {
 
         productServiceAsync.listProducts();
 
-        verify(productListPageService, times(1)).process();
-        verify(productDetailPageService, times(0)).process(anyString());
-    }
-
-    @Test
-    public void should_ReturnEmptyResult_InvalidURL() {
-
-        when(productListPageService.process()).thenReturn(Collections.emptyList());
-
-        productServiceAsync.listProducts();
-
-        verify(productListPageService, times(1)).process();
+        verify(productListPageService, times(0)).process();
         verify(productDetailPageService, times(0)).process(anyString());
     }
 

@@ -70,9 +70,9 @@ curl http://localhost:8080/products/async
 ### The services also can be called from the [Postman](https://www.getpostman.com/)
 Use the folder postman and import the collection to your postman app.
 This colletion provide call to both services sync and async and assertation test for the result.
-- Execute the step Run
+- Execute the Run step
 - Open the postman
-- Click on the import butto
+- Click on the import button
 - Select the file 
 ```
 PROJECT-FOLDER/postman/SainsburysProductsColletion.json

@@ -48,9 +48,9 @@ public class ProductDetailsService {
             Document productPage = response.parse();
             product = new Product();
             product.setTitle(productPage.select(TITLE_ELEMENT).text());
-            product.setSize((new BigInteger(response.bodyAsBytes()).intValue() / Math.round(Math.pow(KB_SIZE, SQUARE))) + KB);
+            product.setSize((((response.bodyAsBytes().length / KB_SIZE) * 100) / 100) + KB);
             String price = Jsoup.parse(productPage.select(PRICE_ELEMENT).text()).body().text();
-            product.setUnitPrice(Float.parseFloat(price.substring(POUND_INDEX, price.indexOf(SLASH))));
+            product.setUnitPrice(Float.parseFloat(price.trim().substring(POUND_INDEX, price.indexOf(SLASH))));
             product.setDescription(productPage.select(PRODUCT_DESCRIPTION_ELEMENT).stream().findFirst().get().text());
 
         } catch (IOException e) {

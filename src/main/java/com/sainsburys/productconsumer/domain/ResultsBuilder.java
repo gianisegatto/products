@@ -14,7 +14,7 @@ public class ResultsBuilder {
 
     private List<Product> products;
 
-    public ResultsBuilder products(final List<Product> products) {
+    public ResultsBuilder setProducts(final List<Product> products) {
         this.products = products;
         return this;
     }

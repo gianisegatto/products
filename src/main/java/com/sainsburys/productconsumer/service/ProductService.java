@@ -43,7 +43,7 @@ public class ProductService {
 
         List<Product> products = processProducts(productListService.process());
 
-        results = new ResultsBuilder().products(products).build();
+        results = new ResultsBuilder().setProducts(products).build();
 
         return Optional.ofNullable(results);
     }

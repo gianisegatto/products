@@ -1,6 +1,5 @@
 package com.sainsburys.productconsumer.service;
 
-import org.jsoup.nodes.Element;
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 

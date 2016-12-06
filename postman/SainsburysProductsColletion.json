@@ -8,7 +8,7 @@
 	},
 	"item": [
 		{
-			"name": "Asyncronous request",
+			"name": "Asynchronous request",
 			"event": [
 				{
 					"listen": "test",
@@ -42,12 +42,12 @@
 					"mode": "formdata",
 					"formdata": []
 				},
-				"description": "This request can be used to test the calls to the asyncronous Sainsbury's products service."
+				"description": "This request can be used to test the calls to the asynchronous Sainsbury's products service."
 			},
 			"response": []
 		},
 		{
-			"name": "Syncronous request",
+			"name": "Synchronous request",
 			"event": [
 				{
 					"listen": "test",
@@ -81,7 +81,7 @@
 					"mode": "formdata",
 					"formdata": []
 				},
-				"description": "This request can be used to test the calls to the syncronous Sainsbury's products service."
+				"description": "This request can be used to test the calls to the synchronous Sainsbury's products service."
 			},
 			"response": []
 		}

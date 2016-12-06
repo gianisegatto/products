@@ -67,6 +67,19 @@ curl http://localhost:8080/products/async
 ```
 - This service is using CompletableFuture java feature to turn the code non-blocking
 
+### Motivation to create two services sync and async
+The motivation of build two differents services that do the same thing is showing the difference between reactive code and common code.
+If you open the code in some Idea and change the method listProductsAsync in the class ProductController based on the example above and put a breakpoint on both lines inside the method and startup the application on debug mode and call the async service. You can see the non-blocking code running.
+```Java
+public DeferredResult<ResponseEntity<Results>> listProductsAsync() {
+        DeferredResult<ResponseEntity<Results>> deferredResult =  productServiceAsync.listProducts();
+        return deferredResult;
+}
+```
+
+### Note
+All expections are logged but ignored when it happens I'm returning null or empty list. It could be better if the result had an alerts or erros element to be retorned information about the itens that had problem.
+
 ### The services also can be called from the [Postman](https://www.getpostman.com/)
 Use the folder postman and import the collection to your postman app.
 This colletion provide call to both services sync and async and assertation test for the result.

@@ -4,14 +4,8 @@ package com.sainsburys.productconsumer.service;
 import com.sainsburys.productconsumer.domain.Product;
 import com.sainsburys.productconsumer.domain.Results;
 import com.sainsburys.productconsumer.domain.ResultsBuilder;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Element;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.request.async.DeferredResult;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;

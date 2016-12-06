@@ -3,10 +3,7 @@ package com.sainsburys.productconsumer.service;
 import com.sainsburys.productconsumer.domain.Product;
 import com.sainsburys.productconsumer.domain.Results;
 import com.sainsburys.productconsumer.domain.ResultsBuilder;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Element;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

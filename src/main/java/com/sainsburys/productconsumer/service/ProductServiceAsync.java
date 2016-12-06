@@ -77,7 +77,7 @@ public class ProductServiceAsync {
         CompletableFuture<Results> completableFuture = productsList
                 .thenApply(this::processLinks)
                 .thenCompose(this::joinProducts)
-                .thenApply(products -> new ResultsBuilder().products(products).build());
+                .thenApply(products -> new ResultsBuilder().setProducts(products).build());
 
         return completableFuture;
     }

@@ -74,8 +74,11 @@ If you open the code in some Idea and change the method listProductsAsync in the
 public DeferredResult<ResponseEntity<Results>> listProductsAsync() {
         DeferredResult<ResponseEntity<Results>> deferredResult =  productServiceAsync.listProducts();
         return deferredResult;
-    }
+}
 ```
+
+### Note
+All expections are logged but ignored when it happens I'm returning null or empty list. It could be better if the result had an alerts or erros element to be retorned information about the itens that had problem.
 
 ### The services also can be called from the [Postman](https://www.getpostman.com/)
 Use the folder postman and import the collection to your postman app.

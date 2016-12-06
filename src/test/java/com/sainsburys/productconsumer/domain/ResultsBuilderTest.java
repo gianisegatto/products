@@ -24,7 +24,7 @@ public class ResultsBuilderTest {
         product.setSize(SIZE);
         product.setUnitPrice(10f);
 
-        Results results = new ResultsBuilder().products(Arrays.asList(product, product)).build();
+        Results results = new ResultsBuilder().setProducts(Arrays.asList(product, product)).build();
 
         assertNotNull(results);
         assertThat(results.getProducts().size(), is(2));

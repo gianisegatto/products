@@ -3,6 +3,7 @@ package com.sainsburys.productconsumer.service;
 import com.sainsburys.productconsumer.domain.Product;
 import com.sainsburys.productconsumer.domain.Results;
 import com.sainsburys.productconsumer.domain.ResultsBuilder;
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,14 +18,6 @@ import java.util.stream.Collectors;
  */
 @Service
 public class ProductService {
-
-    private static final String LINK_ATTRIBUTE = "abs:href";
-
-    @Value("${products.page.url}")
-    private String productsPageUrl;
-
-    @Value("${jsoup.tiemout}")
-    private int jSoupTimeout;
 
     @Autowired
     private ProductListService productListService;
@@ -54,9 +47,8 @@ public class ProductService {
      * @param productLines List of the products from the Sainsbury' products page
      * @return List of products based on the the products list
      */
-    private List<Product> processProducts(final List<Element> productLines) {
+    private List<Product> processProducts(final List<String> productLines) {
         return productLines.stream()
-                        .map(line -> line.attr(LINK_ATTRIBUTE))
                         .map(productDetailsService::process)
                         .filter(product -> product != null)
                         .collect(Collectors.toList());

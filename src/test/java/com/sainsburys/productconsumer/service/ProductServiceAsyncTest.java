@@ -69,7 +69,7 @@ public class ProductServiceAsyncTest {
     @Test
     public void should_ReturnProducts() throws IOException {
 
-        when(productListService.process()).thenReturn(Arrays.asList(element, element));
+        when(productListService.process()).thenReturn(Arrays.asList("", ""));
         when(elements.stream()).thenReturn(Arrays.asList(element, element).stream());
         when(productDetailsService.process(anyString())).thenReturn(product);
 

@@ -22,14 +22,14 @@ public class ProductListServiceTest {
     @Test
     public void should_EmptyList_InvalidUrl() {
         ReflectionTestUtils.setField(productListService, "productsPageUrl", "http://dlkdlkj");
-        List<Element> elements = productListService.process();
+        List<String> elements = productListService.process();
         assertThat(elements.size(), is(0));
     }
 
     @Test
     public void should_ReturnProductLines() {
         ReflectionTestUtils.setField(productListService, "productsPageUrl", "http://hiring-tests.s3-website-eu-west-1.amazonaws.com/2015_Developer_Scrape/5_products.html");
-        List<Element> productLines = productListService.process();
+        List<String> productLines = productListService.process();
         assertNotNull(productLines);
         assertThat(productLines.size(), is(7));
     }

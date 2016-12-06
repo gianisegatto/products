@@ -4,6 +4,7 @@ package com.sainsburys.productconsumer.service;
 import com.sainsburys.productconsumer.domain.Product;
 import com.sainsburys.productconsumer.domain.Results;
 import com.sainsburys.productconsumer.domain.ResultsBuilder;
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,14 +27,6 @@ import static java.util.concurrent.CompletableFuture.supplyAsync;
 @Service
 public class ProductServiceAsync {
 
-    private static final String LINK_ATTRIBUTE = "abs:href";
-
-    @Value("${products.page.url}")
-    private String productsPageUrl;
-
-    @Value("${jsoup.tiemout}")
-    private int jSoupTimeout;
-
     @Autowired
     private ExecutorService executor;
 
@@ -46,33 +39,11 @@ public class ProductServiceAsync {
     /**
      * Provides a list of products based on the Sainsbury's products page executing in parallel
      * all calls to the Sainsbury's pages.
-     * @return List of products from the Sainsbury' products page
-     */
-    public DeferredResult<ResponseEntity<Results>> listProducts() {
-
-        DeferredResult<ResponseEntity<Results>> deferredResult = new DeferredResult<>();
-
-        CompletableFuture.supplyAsync(() -> this.processAsync(), executor)
-                .whenCompleteAsync((response, e) -> {
-                    response.exceptionally(ex -> {
-                        deferredResult.setErrorResult(ex.getCause());
-                        return null;
-                    });
-                    response.thenAccept(results -> {
-                        deferredResult.setResult(new ResponseEntity<>(results, HttpStatus.OK));
-                    });
-                });
-
-        return deferredResult;
-    }
-
-    /**
-     * Executes all calls to the Sainbury's pages async.
      * @return Results of products.
      */
-    private CompletableFuture<Results> processAsync() {
+    public CompletableFuture<Results> listProducts() {
 
-        CompletableFuture<List<Element>> productsList = CompletableFuture.supplyAsync(() -> productListService.process());
+        CompletableFuture<List<String>> productsList = CompletableFuture.supplyAsync(() -> productListService.process());
 
         CompletableFuture<Results> completableFuture = productsList
                 .thenApply(this::processLinks)
@@ -88,9 +59,8 @@ public class ProductServiceAsync {
      * @param productLines List of the products from the Sainsbury' products page
      * @return List of products based on the the products list
      */
-    private CompletableFuture<Product>[] processLinks(final List<Element> productLines) {
+    private CompletableFuture<Product>[] processLinks(final List<String> productLines) {
         return productLines.stream()
-                .map(element -> element.attr(LINK_ATTRIBUTE))
                 .map(link -> supplyAsync(() -> productDetailsService.process(link), executor))
                 .toArray(CompletableFuture[]::new);
     }

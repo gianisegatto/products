@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.math.BigInteger;
 
 /**
  * This class provides a way to get the details of the product in the Sainsbury's Product Details page
@@ -30,8 +29,8 @@ public class ProductDetailsService {
     private static final int POUND_INDEX = 1;
     private static final int SQUARE = 2;
 
-    @Value("${jsoup.tiemout}")
-    private int jSoupTimeout;
+    @Value("${connection.tiemout}")
+    private int connectionTimeout;
 
     /**
      * Return the product information based on the Product Details page link
@@ -44,7 +43,7 @@ public class ProductDetailsService {
 
         try {
 
-            Connection.Response response = Jsoup.connect(link).timeout(jSoupTimeout).execute();
+            Connection.Response response = Jsoup.connect(link).timeout(connectionTimeout).execute();
             Document productPage = response.parse();
             product = new Product();
             product.setTitle(productPage.select(TITLE_ELEMENT).text());

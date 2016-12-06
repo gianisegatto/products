@@ -10,13 +10,11 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -31,7 +29,7 @@ public class ProductServiceTest {
     private Element element;
 
     @Mock
-    private List<Element> elements;
+    private List<String> elements;
 
     @Mock
     private ProductListService productListService;
@@ -45,17 +43,14 @@ public class ProductServiceTest {
     @Test
     public void should_ReturnProducts() throws IOException {
 
-        when(productListService.process()).thenReturn(elements);
-        when(elements.stream()).thenReturn(Arrays.asList(element, element).stream());
-        when(element.attr("abs:href")).thenReturn("http://localhost:9080");
-        when(productDetailsService.process("http://localhost:9080")).thenReturn(product);
+        when(productListService.process()).thenReturn(Arrays.asList("", ""));
+        when(productDetailsService.process(anyString())).thenReturn(product);
         when(product.getUnitPrice()).thenReturn(10f);
 
         Optional<Results> results = productService.listProducts();
 
         verify(productListService, times(1)).process();
-        verify(element, times(2)).attr("abs:href");
-        verify(productDetailsService, times(2)).process("http://localhost:9080");
+        verify(productDetailsService, times(2)).process(anyString());
 
         assertNotNull(results.get());
         assertThat(results.get().getProducts().size(), is(2));
@@ -64,16 +59,14 @@ public class ProductServiceTest {
 
     @Test
     public void should_NotReturnProducts() throws IOException {
-        when(productListService.process()).thenReturn(elements);
-        when(elements.stream()).thenReturn(Arrays.asList(element).stream());
-        when(element.attr("abs:href")).thenReturn("http://localhost:9080");
-        when(productDetailsService.process("http://notexisturl")).thenReturn(null);
+
+        when(productListService.process()).thenReturn(Arrays.asList(""));
+        when(productDetailsService.process(anyString())).thenReturn(null);
 
         Optional<Results> results = productService.listProducts();
 
         verify(productListService, times(1)).process();
-        verify(element, times(1)).attr("abs:href");
-        verify(productDetailsService, times(1)).process("http://localhost:9080");
+        verify(productDetailsService, times(1)).process(anyString());
 
         assertNotNull(results.get());
         assertThat(results.get().getProducts().size(), is(0));
@@ -87,8 +80,7 @@ public class ProductServiceTest {
         Optional<Results> results = productService.listProducts();
 
         verify(productListService, times(1)).process();
-        verify(element, times(0)).attr("abs:href");
-        verify(productDetailsService, times(0)).process("http://localhost:9080");
+        verify(productDetailsService, times(0)).process(anyString());
 
         assertNotNull(results.get());
         assertThat(results.get().getProducts().size(), is(0));

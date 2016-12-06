@@ -15,6 +15,8 @@ import org.springframework.web.context.request.async.DeferredResult;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
 
 /**
  * Controller to provider services to list the products
@@ -29,6 +31,9 @@ public class ProductController {
 
     @Autowired
     private ProductServiceAsync productServiceAsync;
+
+    @Autowired
+    private ExecutorService executor;
 
     /**
      * Call the Sainsbury's products test page and return a list of the products inside the page
@@ -53,6 +58,19 @@ public class ProductController {
             method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public DeferredResult<ResponseEntity<Results>> listProductsAsync() {
 
-        return productServiceAsync.listProducts();
+        DeferredResult<ResponseEntity<Results>> deferredResult = new DeferredResult<>();
+
+        CompletableFuture.supplyAsync(() -> productServiceAsync.listProducts(), executor)
+                .whenCompleteAsync((response, e) -> {
+                    response.exceptionally(ex -> {
+                        deferredResult.setErrorResult(ex.getCause());
+                        return null;
+                    });
+                    response.thenAccept(results -> {
+                        deferredResult.setResult(new ResponseEntity<>(results, HttpStatus.OK));
+                    });
+                });
+
+        return deferredResult;
     }
 }

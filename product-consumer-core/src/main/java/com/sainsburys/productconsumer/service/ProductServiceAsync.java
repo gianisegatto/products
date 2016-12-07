@@ -30,6 +30,17 @@ public class ProductServiceAsync {
     @Autowired
     private ProductDetailsService productDetailsService;
 
+    public ProductServiceAsync() {
+    }
+
+    public ProductServiceAsync(ExecutorService executorService,
+                               ProductListService productListService,
+                               ProductDetailsService productDetailsService) {
+        this.executor = executorService;
+        this.productListService = productListService;
+        this.productDetailsService = productDetailsService;
+    }
+
     /**
      * Provides a list of products based on the Sainsbury's products page executing in parallel
      * all calls to the Sainsbury's pages.

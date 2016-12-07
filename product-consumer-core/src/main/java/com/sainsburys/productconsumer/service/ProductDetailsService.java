@@ -32,6 +32,13 @@ public class ProductDetailsService {
     @Value("${connection.tiemout}")
     private int connectionTimeout;
 
+    public ProductDetailsService() {
+    }
+
+    public ProductDetailsService(int connectionTimeout) {
+        this.connectionTimeout = connectionTimeout;
+    }
+
     /**
      * Return the product information based on the Product Details page link
      * @param link Product Detail page link to be read

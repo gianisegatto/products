@@ -28,6 +28,14 @@ public class ProductListService {
     @Value("${connection.tiemout}")
     private int connectionTimeout;
 
+    public ProductListService() {
+    }
+
+    public ProductListService(String productsPageUrl, int connectionTimeout) {
+        this.productsPageUrl = productsPageUrl;
+        this.connectionTimeout = connectionTimeout;
+    }
+
     /**
      * Provides a list of product link base on the Sainsbury's product list page.
      * @return List of links

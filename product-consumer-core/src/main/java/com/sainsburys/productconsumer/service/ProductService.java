@@ -22,6 +22,14 @@ public class ProductService {
     @Autowired
     private ProductDetailsService productDetailsService;
 
+    public ProductService() {
+    }
+
+    public ProductService(ProductListService productListService, ProductDetailsService productDetailsService) {
+        this.productListService = productListService;
+        this.productDetailsService = productDetailsService;
+    }
+
     /**
      * Provides a list of products based on the Sainsbury's products page executing in sequence
      * each link from the page.

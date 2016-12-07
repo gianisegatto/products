@@ -62,7 +62,7 @@ public class ProductServiceAsyncTest {
 
         productServiceAsync.listProducts();
 
-        verify(productListService, times(0)).process();
+        verify(productListService, times(1)).process();
         verify(productDetailsService, times(0)).process(anyString());
     }
 

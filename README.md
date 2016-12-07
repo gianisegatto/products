@@ -46,12 +46,23 @@ git clone https://github.com/gianisegatto/products.git
 ```
 mvn clean install
 ```
-
-### Run
+### Run console application
 - Open the terminal
 - Go to the folder that the code was cloned and type
 ```
-mvn spring-boot:run
+1 - cd product-consumer-console/target
+Sync execution
+2 - java -cp product-consumer-console-1.0-SNAPSHOT-jar-with-dependencies.jar  com.sainsburys.productconsumer.console.ListProducts
+Async execution
+2 - java -cp product-consumer-console-1.0-SNAPSHOT-jar-with-dependencies.jar  com.sainsburys.productconsumer.console.ListProductsAsync
+```
+
+### Run Server application
+- Open the terminal
+- Go to the folder that the code was cloned and type
+```
+1 - cd product-consumer-app
+2 - mvn spring-boot:run
 ```
 
 ### Executing

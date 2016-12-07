@@ -46,12 +46,23 @@ git clone https://github.com/gianisegatto/products.git
 ```
 mvn clean install
 ```
-
-### Run
+### Run console application
 - Open the terminal
 - Go to the folder that the code was cloned and type
 ```
-mvn spring-boot:run
+1 - cd product-consumer-console/target
+Sync execution
+2 - java -cp product-consumer-console-1.0-SNAPSHOT-jar-with-dependencies.jar  com.sainsburys.productconsumer.console.ListProducts
+Async execution
+2 - java -cp product-consumer-console-1.0-SNAPSHOT-jar-with-dependencies.jar  com.sainsburys.productconsumer.console.ListProductsAsync
+```
+
+### Run Server application
+- Open the terminal
+- Go to the folder that the code was cloned and type
+```
+1 - cd product-consumer-app
+2 - mvn spring-boot:run
 ```
 
 ### Executing
@@ -69,13 +80,7 @@ curl http://localhost:8080/products/async
 
 ### Motivation to create two services sync and async
 The motivation of build two differents services that do the same thing is showing the difference between reactive code and common code.
-If you open the code in some Idea and change the method listProductsAsync in the class ProductController based on the example above and put a breakpoint on both lines inside the method and startup the application on debug mode and call the async service. You can see the non-blocking code running.
-```Java
-public DeferredResult<ResponseEntity<Results>> listProductsAsync() {
-        DeferredResult<ResponseEntity<Results>> deferredResult =  productServiceAsync.listProducts();
-        return deferredResult;
-}
-```
+If you open the code in some Idea and put a breakpoint on lines 61 and 74 inside the method and startup the application on debug mode and call the async service. You can see the non-blocking code running.
 
 ### Note
 All expections are logged but ignored when it happens I'm returning null or empty list. It could be better if the result had an alerts or erros element to be retorned information about the itens that had problem.

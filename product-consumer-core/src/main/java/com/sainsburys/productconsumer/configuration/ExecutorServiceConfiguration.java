@@ -22,6 +22,17 @@ public class ExecutorServiceConfiguration {
     @Value("${executor.service.keepAliveTime}")
     private int keepAliveTime;
 
+    public ExecutorServiceConfiguration() {
+    }
+
+    public ExecutorServiceConfiguration(int corePoolSize,
+                                        int maximumPoolSize,
+                                        int keepAliveTime) {
+        this.corePoolSize = corePoolSize;
+        this.maximumPoolSize = maximumPoolSize;
+        this.keepAliveTime = keepAliveTime;
+    }
+
     @Bean
     public ExecutorService executorService() {
         return new ThreadPoolExecutor(corePoolSize,

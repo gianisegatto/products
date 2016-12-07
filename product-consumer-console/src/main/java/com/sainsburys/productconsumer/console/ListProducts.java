@@ -1,6 +1,5 @@
 package com.sainsburys.productconsumer.console;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sainsburys.productconsumer.domain.Results;
 import com.sainsburys.productconsumer.service.ProductDetailsService;
@@ -13,7 +12,7 @@ public class ListProducts {
 
     private static final String PRODUCTS_LIST_URL = "http://hiring-tests.s3-website-eu-west-1.amazonaws.com/2015_Developer_Scrape/5_products.html";
 
-    public static void main(String[] args) throws JsonProcessingException {
+    public static void main(String[] args) {
 
         ProductListService productListService = new ProductListService(PRODUCTS_LIST_URL, 2000);
 
@@ -24,7 +23,12 @@ public class ListProducts {
         Optional<Results> results = productService.listProducts();
 
         ObjectMapper objectMapper = new ObjectMapper();
-        String resultsJson = objectMapper.writeValueAsString(results.get());
+        String resultsJson = null;
+        try {
+            resultsJson = objectMapper.writeValueAsString(results.get());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         System.out.println(resultsJson);
     }

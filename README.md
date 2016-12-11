@@ -29,6 +29,7 @@ Take all products listed on the page, goes to each product page and return a lis
 - [junit](http://junit.org/) - Unit tests
 - [mockito](http://site.mockito.org/) - Mocking objects for unit tests
 - [SpringJunit](http://docs.spring.io/spring-batch/reference/html/testing.html) - Unit test that depends on the context
+- [Jackson](http://wiki.fasterxml.com/JacksonHome) Java library for processing JSON data format.
 
 ### Setup
 1. Install [Java 8](http://www.oracle.com/technetwork/java/javase/overview/java8-2100321.html), if you don't have it yet.

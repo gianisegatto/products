@@ -84,7 +84,6 @@ If you open the code in some Idea and put a breakpoint on lines 61 and 74 inside
 
 ### Note
 All expections are logged but ignored when it happens I'm returning null or empty list. It could be better if the result had an alerts or erros element to be retorned information about the itens that had problem.
-Maven settings can be better configured
 
 ### The services also can be called from the [Postman](https://www.getpostman.com/)
 Use the folder postman and import the collection to your postman app.

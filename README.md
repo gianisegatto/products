@@ -52,9 +52,9 @@ mvn clean install
 ```
 1 - cd product-consumer-console/target
 Sync execution
-2 - java -cp product-consumer-console-1.0-SNAPSHOT-jar-with-dependencies.jar  com.sainsburys.productconsumer.console.ListProducts
+2 - java -cp product-consumer-console-1.0-SNAPSHOT.jar com.sainsburys.productconsumer.console.ListProducts
 Async execution
-2 - java -cp product-consumer-console-1.0-SNAPSHOT-jar-with-dependencies.jar  com.sainsburys.productconsumer.console.ListProductsAsync
+2 - java -cp product-consumer-console-1.0-SNAPSHOT.jar com.sainsburys.productconsumer.console.ListProductsAsync
 ```
 
 ### Run Server application

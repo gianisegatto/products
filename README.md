@@ -65,7 +65,14 @@ Async execution
 1 - cd product-consumer-app
 2 - mvn spring-boot:run
 ```
-
+Or
+- Open the terminal
+- Go to the folder that the code was cloned and type
+Note: If the application is already built go directly to step 2
+```
+1 - mvn clean install
+2 - java -jar product-consumer-app/target/product-consumer-app-1.0-SNAPSHOT.jar
+```
 ### Executing
 #### Call Sync service
 - Open the terminal and type

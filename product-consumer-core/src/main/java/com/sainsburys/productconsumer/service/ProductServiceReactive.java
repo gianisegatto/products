@@ -1,22 +1,13 @@
 package com.sainsburys.productconsumer.service;
 
-
-import com.sainsburys.productconsumer.domain.Product;
 import com.sainsburys.productconsumer.domain.Results;
 import com.sainsburys.productconsumer.domain.ResultsBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import rx.Observable;
-import rx.functions.Action2;
 import rx.schedulers.Schedulers;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import java.util.concurrent.ExecutorService;
-
-import static java.util.Arrays.*;
 
 @Service
 public class ProductServiceReactive {

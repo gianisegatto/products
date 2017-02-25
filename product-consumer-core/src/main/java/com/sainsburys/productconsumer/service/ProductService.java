@@ -16,15 +16,11 @@ import java.util.stream.Collectors;
 @Service
 public class ProductService {
 
-    @Autowired
     private ProductListService productListService;
 
-    @Autowired
     private ProductDetailsService productDetailsService;
 
-    public ProductService() {
-    }
-
+    @Autowired
     public ProductService(ProductListService productListService, ProductDetailsService productDetailsService) {
         this.productListService = productListService;
         this.productDetailsService = productDetailsService;

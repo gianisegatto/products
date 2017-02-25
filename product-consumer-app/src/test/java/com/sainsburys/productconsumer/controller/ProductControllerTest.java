@@ -64,4 +64,16 @@ public class ProductControllerTest {
                 .andExpect(jsonPath("$.products.length()", is(7)))
                 .andExpect(jsonPath("$.total", is (15.1)));
     }
+
+    @Test
+    public void should_ReturnProducts_Reactive() throws Exception {
+
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/products/reactiveAsync")).andReturn();
+
+        this.mockMvc.perform(asyncDispatch(mvcResult))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$.products.length()", is(7)))
+                .andExpect(jsonPath("$.total", is (15.1)));
+    }
 }

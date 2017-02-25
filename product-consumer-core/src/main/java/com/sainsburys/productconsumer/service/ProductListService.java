@@ -25,7 +25,7 @@ public class ProductListService {
     @Value("${products.page.url}")
     private String productsPageUrl;
 
-    @Value("${connection.tiemout}")
+    @Value("${connection.timeout}")
     private int connectionTimeout;
 
     public ProductListService() {

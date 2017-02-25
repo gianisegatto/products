@@ -4,6 +4,7 @@ import com.sainsburys.productconsumer.domain.Product;
 import com.sainsburys.productconsumer.domain.Results;
 import com.sainsburys.productconsumer.service.ProductService;
 import com.sainsburys.productconsumer.service.ProductServiceAsync;
+import com.sainsburys.productconsumer.service.ProductServiceReactive;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -31,6 +32,9 @@ public class ProductController {
 
     @Autowired
     private ProductServiceAsync productServiceAsync;
+
+    @Autowired
+    private ProductServiceReactive productServiceReactive;
 
     @Autowired
     private ExecutorService executor;
@@ -70,6 +74,23 @@ public class ProductController {
                         deferredResult.setResult(new ResponseEntity<>(results, HttpStatus.OK));
                     });
                 });
+
+        return deferredResult;
+    }
+
+    /**
+     * Call the Sainsbury's products test page and return a list of the products inside the page
+     * This service is a non-blocking style and execute the process in parallel using Reactive.
+     * @return Results object with list of products and the total sum price of all products
+     */
+    @RequestMapping(value = "/reactiveAsync",
+            method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public DeferredResult<ResponseEntity<Results>> listProductsAsyncReactive() {
+
+        DeferredResult<ResponseEntity<Results>> deferredResult = new DeferredResult<>();
+
+        productServiceReactive.listProducts()
+                .subscribe(results -> deferredResult.setResult(new ResponseEntity<>(results, HttpStatus.OK)));
 
         return deferredResult;
     }

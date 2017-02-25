@@ -21,18 +21,13 @@ import static java.util.concurrent.CompletableFuture.supplyAsync;
 @Service
 public class ProductServiceAsync {
 
-    @Autowired
     private ExecutorService executor;
 
-    @Autowired
     private ProductListService productListService;
 
-    @Autowired
     private ProductDetailsService productDetailsService;
 
-    public ProductServiceAsync() {
-    }
-
+    @Autowired
     public ProductServiceAsync(ExecutorService executorService,
                                ProductListService productListService,
                                ProductDetailsService productDetailsService) {

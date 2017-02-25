@@ -2,6 +2,7 @@ package com.sainsburys.productconsumer.domain;
 
 import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,10 +13,10 @@ public class ResultsBuilder {
 
     private static final int HUNDRED_ROUND = 100;
 
-    private List<Product> products;
+    private List<Product> products = new ArrayList<>();
 
     public ResultsBuilder setProducts(final List<Product> products) {
-        this.products = products;
+        this.products.addAll(products);
         return this;
     }
 

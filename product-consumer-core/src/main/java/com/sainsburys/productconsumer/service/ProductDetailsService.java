@@ -6,6 +6,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -27,9 +28,8 @@ public class ProductDetailsService {
     private static final String PRODUCT_DESCRIPTION_ELEMENT = ".productText p:eq(0)";
     private static final String SLASH = "/";
     private static final int POUND_INDEX = 1;
-    private static final int SQUARE = 2;
 
-    @Value("${connection.tiemout}")
+    @Value("${connection.timeout}")
     private int connectionTimeout;
 
     public ProductDetailsService() {

@@ -1,5 +1,6 @@
 package com.sainsburys.productconsumer.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -8,7 +9,7 @@ import java.util.List;
  */
 public class Results {
 
-    private List<Product> products;
+    private List<Product> products = new ArrayList<>();
 
     private Double total;
 

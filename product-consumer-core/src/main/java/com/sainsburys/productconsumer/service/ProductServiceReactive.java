@@ -49,7 +49,7 @@ public class ProductServiceReactive {
 
         return Observable.from(productListService.process())
                 .map(productDetailsService::process)
-                .onErrorReturn(null)
+                .subscribeOn(Schedulers.from(executor))
                 .filter(product -> product != null)
                 .subscribeOn(Schedulers.from(executor))
                 .toList()

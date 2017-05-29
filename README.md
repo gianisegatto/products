@@ -101,9 +101,9 @@ This colletion provide call to both services sync and async and assertation test
 - Click on the import button
 - Select the file 
 ```
-PROJECT-FOLDER/postman/SainsburysProductsColletion.json
+PROJECT-FOLDER/postman/ProductsColletion.json
 ```
-- Go to the Sainsbury's Products colletion
+- Go to the Products colletion
 - Click on the > button
 - Click on the Run button
 - After collection runner window open click on Start Run button

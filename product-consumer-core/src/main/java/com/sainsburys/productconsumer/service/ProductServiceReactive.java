@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import rx.Observable;
 import rx.schedulers.Schedulers;
 
+import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 
 @Service
@@ -20,8 +21,8 @@ public class ProductServiceReactive {
 
     @Autowired
     public ProductServiceReactive(ExecutorService executorService,
-                               ProductListService productListService,
-                               ProductDetailsService productDetailsService) {
+                                  ProductListService productListService,
+                                  ProductDetailsService productDetailsService) {
 
         this.executor = executorService;
         this.productListService = productListService;
@@ -41,10 +42,10 @@ public class ProductServiceReactive {
         return Observable.from(productListService.process())
                 .map(productDetailsService::process)
                 .subscribeOn(Schedulers.from(executor))
-                .filter(product -> product != null)
+                .filter(Objects::nonNull)
                 .subscribeOn(Schedulers.from(executor))
                 .toList()
-                .map(products -> resultsBuilder.setProducts(products))
+                .map(resultsBuilder::setProducts)
                 .subscribeOn(Schedulers.from(executor))
                 .map(ResultsBuilder::build)
                 .subscribeOn(Schedulers.from(executor));

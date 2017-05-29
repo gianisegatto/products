@@ -21,8 +21,7 @@ public class ResultsBuilder {
     }
 
     public Results build() {
-        Results results;
-        results = new Results();
+        Results results = new Results();
         results.setProducts(products);
         results.setTotal(sumProductsPrice(products));
         return results;

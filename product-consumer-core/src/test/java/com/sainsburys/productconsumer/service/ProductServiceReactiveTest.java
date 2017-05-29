@@ -3,7 +3,6 @@ package com.sainsburys.productconsumer.service;
 import com.sainsburys.productconsumer.configuration.ExecutorServiceConfiguration;
 import com.sainsburys.productconsumer.domain.Product;
 import com.sainsburys.productconsumer.domain.Results;
-import org.jsoup.nodes.Element;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,16 +14,13 @@ import rx.Observable;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ProductServiceReactiveTest {
@@ -46,10 +42,7 @@ public class ProductServiceReactiveTest {
     @Before
     public void setUp() {
 
-        ExecutorServiceConfiguration executorServiceConfiguration = new ExecutorServiceConfiguration();
-        ReflectionTestUtils.setField(executorServiceConfiguration, "corePoolSize", 20);
-        ReflectionTestUtils.setField(executorServiceConfiguration, "maximumPoolSize", 40);
-        ReflectionTestUtils.setField(executorServiceConfiguration, "keepAliveTime", 1000);
+        ExecutorServiceConfiguration executorServiceConfiguration = new ExecutorServiceConfiguration(1, 1, 10);
 
         executor = executorServiceConfiguration.executorService();
 

@@ -29,13 +29,12 @@ public class ProductDetailsService {
     private static final String SLASH = "/";
     private static final int POUND_INDEX = 1;
 
-    @Value("${connection.timeout}")
     private int connectionTimeout;
 
-    public ProductDetailsService() {
-    }
+    @Autowired
+    public ProductDetailsService(@Value("${connection.timeout}")
+                                 int connectionTimeout) {
 
-    public ProductDetailsService(int connectionTimeout) {
         this.connectionTimeout = connectionTimeout;
     }
 
@@ -44,7 +43,7 @@ public class ProductDetailsService {
      * @param link Product Detail page link to be read
      * @return Product details
      */
-    public Product process(final String link) {
+    public Product process(String link) {
 
         Product product = null;
 

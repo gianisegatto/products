@@ -3,6 +3,7 @@ package com.sainsburys.productconsumer.service;
 import org.jsoup.Jsoup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -22,16 +23,16 @@ public class ProductListService {
     private static final String PRODUCTS_LINK_ELEMENT = ".productLister a[href]";
     private static final String LINK_ATTRIBUTE = "abs:href";
 
-    @Value("${products.page.url}")
     private String productsPageUrl;
 
-    @Value("${connection.timeout}")
     private int connectionTimeout;
 
-    public ProductListService() {
-    }
+    @Autowired
+    public ProductListService(@Value("${products.page.url}")
+                              String productsPageUrl,
+                              @Value("${connection.timeout}")
+                              int connectionTimeout) {
 
-    public ProductListService(String productsPageUrl, int connectionTimeout) {
         this.productsPageUrl = productsPageUrl;
         this.connectionTimeout = connectionTimeout;
     }

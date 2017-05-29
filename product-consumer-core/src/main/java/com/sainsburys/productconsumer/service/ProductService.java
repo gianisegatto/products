@@ -21,7 +21,9 @@ public class ProductService {
     private ProductDetailsService productDetailsService;
 
     @Autowired
-    public ProductService(ProductListService productListService, ProductDetailsService productDetailsService) {
+    public ProductService(ProductListService productListService,
+                          ProductDetailsService productDetailsService) {
+
         this.productListService = productListService;
         this.productDetailsService = productDetailsService;
     }
@@ -33,11 +35,9 @@ public class ProductService {
      */
     public Optional<Results> listProducts() {
 
-        Results results = null;
-
         List<Product> products = processProducts(productListService.process());
 
-        results = new ResultsBuilder().setProducts(products).build();
+        Results results = new ResultsBuilder().setProducts(products).build();
 
         return Optional.ofNullable(results);
     }
@@ -48,7 +48,7 @@ public class ProductService {
      * @param productLines List of the products from the Sainsbury' products page
      * @return List of products based on the the products list
      */
-    private List<Product> processProducts(final List<String> productLines) {
+    private List<Product> processProducts(List<String> productLines) {
         return productLines.stream()
                         .map(productDetailsService::process)
                         .filter(product -> product != null)

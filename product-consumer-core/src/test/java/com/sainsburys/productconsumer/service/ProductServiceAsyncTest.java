@@ -3,18 +3,14 @@ package com.sainsburys.productconsumer.service;
 import com.sainsburys.productconsumer.configuration.ExecutorServiceConfiguration;
 import com.sainsburys.productconsumer.domain.Product;
 import com.sainsburys.productconsumer.domain.Results;
-import org.jsoup.nodes.Element;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.test.util.ReflectionTestUtils;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -28,14 +24,6 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class ProductServiceAsyncTest {
 
-    private ExecutorService executor;
-
-    @Mock
-    private Element element;
-
-    @Mock
-    private List<Element> elements;
-
     @Mock
     private Product product;
 
@@ -45,20 +33,16 @@ public class ProductServiceAsyncTest {
     @Mock
     private ProductDetailsService productDetailsService;
 
-    @InjectMocks
     private ProductServiceAsync productServiceAsync;
 
     @Before
     public void setUp() {
 
-        ExecutorServiceConfiguration executorServiceConfiguration = new ExecutorServiceConfiguration();
-        ReflectionTestUtils.setField(executorServiceConfiguration, "corePoolSize", 20);
-        ReflectionTestUtils.setField(executorServiceConfiguration, "maximumPoolSize", 40);
-        ReflectionTestUtils.setField(executorServiceConfiguration, "keepAliveTime", 1000);
+        ExecutorServiceConfiguration executorServiceConfiguration = new ExecutorServiceConfiguration(1, 1, 10);
 
-        executor = executorServiceConfiguration.executorService();
+        ExecutorService executor  = executorServiceConfiguration.executorService();
 
-        ReflectionTestUtils.setField(productServiceAsync, "executor", executor);
+        productServiceAsync = new ProductServiceAsync(executor, productListService, productDetailsService);
     }
 
     @Test

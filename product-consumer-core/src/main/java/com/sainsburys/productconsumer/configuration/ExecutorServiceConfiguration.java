@@ -15,19 +15,17 @@ import java.util.concurrent.TimeUnit;
 @Configuration
 public class ExecutorServiceConfiguration {
 
-    @Value("${executor.service.corePoolSize}")
     private int corePoolSize;
-    @Value("${executor.service.maximumPoolSize}")
     private int maximumPoolSize;
-    @Value("${executor.service.keepAliveTime}")
     private int keepAliveTime;
 
-    public ExecutorServiceConfiguration() {
-    }
-
-    public ExecutorServiceConfiguration(int corePoolSize,
+    public ExecutorServiceConfiguration(@Value("${executor.service.corePoolSize}")
+                                        int corePoolSize,
+                                        @Value("${executor.service.maximumPoolSize}")
                                         int maximumPoolSize,
+                                        @Value("${executor.service.keepAliveTime}")
                                         int keepAliveTime) {
+
         this.corePoolSize = corePoolSize;
         this.maximumPoolSize = maximumPoolSize;
         this.keepAliveTime = keepAliveTime;
@@ -39,6 +37,6 @@ public class ExecutorServiceConfiguration {
                 maximumPoolSize,
                 keepAliveTime,
                 TimeUnit.MILLISECONDS,
-                new LinkedBlockingQueue<Runnable>(maximumPoolSize));
+                new LinkedBlockingQueue<>(maximumPoolSize));
     }
 }

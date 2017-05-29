@@ -5,8 +5,7 @@ import org.junit.Test;
 import java.util.Arrays;
 
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
 
 public class ResultsBuilderTest {
@@ -26,7 +25,7 @@ public class ResultsBuilderTest {
 
         Results results = new ResultsBuilder().setProducts(Arrays.asList(product, product)).build();
 
-        assertNotNull(results);
+        assertThat(results, is(notNullValue()));
         assertThat(results.getProducts().size(), is(2));
         assertThat(results.getProducts().get(0).getTitle(), is(TITLE));
         assertThat(results.getProducts().get(0).getDescription(), is(DESCRIPTION));
@@ -39,8 +38,8 @@ public class ResultsBuilderTest {
 
         Results results = new ResultsBuilder().build();
 
-        assertNotNull(results);
-        assertNull(results.getProducts());
+        assertThat(results, is(notNullValue()));
+        assertThat(results.getProducts().size(), is(0));
         assertThat(results.getTotal(), is(0.0));
     }
 

@@ -1,7 +1,6 @@
 package com.sainsburys.productconsumer.service;
 
 import org.junit.Test;
-import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.List;
 

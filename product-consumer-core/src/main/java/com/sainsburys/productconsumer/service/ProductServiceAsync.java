@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.stream.Collectors;
@@ -31,6 +32,7 @@ public class ProductServiceAsync {
     public ProductServiceAsync(ExecutorService executorService,
                                ProductListService productListService,
                                ProductDetailsService productDetailsService) {
+
         this.executor = executorService;
         this.productListService = productListService;
         this.productDetailsService = productDetailsService;
@@ -45,12 +47,10 @@ public class ProductServiceAsync {
 
         CompletableFuture<List<String>> productsList = CompletableFuture.supplyAsync(() -> productListService.process());
 
-        CompletableFuture<Results> completableFuture = productsList
+        return productsList
                 .thenApply(this::processLinks)
                 .thenCompose(this::joinProducts)
                 .thenApply(products -> new ResultsBuilder().setProducts(products).build());
-
-        return completableFuture;
     }
 
     /**
@@ -74,7 +74,7 @@ public class ProductServiceAsync {
         return allOf(products).thenApply(
                 v -> Stream.of(products)
                         .map(CompletableFuture::join)
-                        .filter(value -> value != null)
+                        .filter(Objects::nonNull)
                         .collect(Collectors.toList()));
     }
 }

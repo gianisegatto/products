@@ -2,7 +2,6 @@ package com.sainsburys.productconsumer.service;
 
 import com.sainsburys.productconsumer.domain.Product;
 import com.sainsburys.productconsumer.domain.Results;
-import org.jsoup.nodes.Element;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -10,26 +9,21 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Optional;
 
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
+import static org.hamcrest.core.IsNull.notNullValue;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ProductServiceTest {
 
     @Mock
     private Product product;
-
-    @Mock
-    private Element element;
-
-    @Mock
-    private List<String> elements;
 
     @Mock
     private ProductListService productListService;
@@ -52,7 +46,7 @@ public class ProductServiceTest {
         verify(productListService, times(1)).process();
         verify(productDetailsService, times(2)).process(anyString());
 
-        assertNotNull(results.get());
+        assertThat(results, is(notNullValue()));
         assertThat(results.get().getProducts().size(), is(2));
         assertThat(results.get().getTotal(), is(20.0));
     }
@@ -68,7 +62,7 @@ public class ProductServiceTest {
         verify(productListService, times(1)).process();
         verify(productDetailsService, times(1)).process(anyString());
 
-        assertNotNull(results.get());
+        assertThat(results, is(notNullValue()));
         assertThat(results.get().getProducts().size(), is(0));
         assertThat(results.get().getTotal(), is(0.0));
     }
@@ -82,7 +76,7 @@ public class ProductServiceTest {
         verify(productListService, times(1)).process();
         verify(productDetailsService, times(0)).process(anyString());
 
-        assertNotNull(results.get());
+        assertThat(results, is(notNullValue()));
         assertThat(results.get().getProducts().size(), is(0));
         assertThat(results.get().getTotal(), is(0.0));
     }

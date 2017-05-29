@@ -6,10 +6,8 @@ import com.sainsburys.productconsumer.domain.Results;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.test.util.ReflectionTestUtils;
 import rx.Observable;
 
 import java.io.IOException;
@@ -36,17 +34,15 @@ public class ProductServiceReactiveTest {
     @Mock
     private ProductDetailsService productDetailsService;
 
-    @InjectMocks
     private ProductServiceReactive productServiceReactive;
 
     @Before
     public void setUp() {
 
         ExecutorServiceConfiguration executorServiceConfiguration = new ExecutorServiceConfiguration(1, 1, 10);
-
         executor = executorServiceConfiguration.executorService();
 
-        ReflectionTestUtils.setField(productServiceReactive, "executor", executor);
+        productServiceReactive = new ProductServiceReactive(executor, productListService, productDetailsService);
     }
 
     @Test(expected = IllegalArgumentException.class)

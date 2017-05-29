@@ -43,10 +43,8 @@ public class ProductServiceReactive {
                 .map(productDetailsService::process)
                 .subscribeOn(Schedulers.from(executor))
                 .filter(Objects::nonNull)
-                .subscribeOn(Schedulers.from(executor))
                 .toList()
                 .map(resultsBuilder::setProducts)
-                .subscribeOn(Schedulers.from(executor))
                 .map(ResultsBuilder::build)
                 .subscribeOn(Schedulers.from(executor));
     }
